@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt index{% endblock %}
+
+{% block body %}
+    
+
+    
+    <div class="container">
+        <h1>Liste des emprunts</h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <a class="btn btn-primary" href="{{ path('app_emprunt_new') }}">Creer un emprunt</a>
+
+        <table class="table table-bordered my-2 border-black text-center">
+            <thead>
+                <tr>
+                    <th>Nom du livre</th>
+                    <th>Nom et prenom de l'etudiant</th>
+                    <th>Date de l'emprunt</th>
+                    <th>Date de retour prevue</th>
+                    <th>Date de retour effective</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for emprunt in emprunts %}
+                <tr>
+                    <td>{{ emprunt.livre.titre }}</td>
+                    <td>{{ emprunt.etudiant.nom }} {{ emprunt.etudiant.prenom }}</td>
+                    <td>{{ emprunt.dateemprunt ? emprunt.dateemprunt|date('d/m/Y') : 'non défini' }}</td>
+                    <td>{{ emprunt.dateretourprevue ? emprunt.dateretourprevue|date('d/m/Y') : 'non défini' }}</td>
+                    <td>{{ emprunt.dateretoureffective ? emprunt.dateretoureffective|date('d/m/Y') : 'non défini' }}</td>
+                    <td class="d-flex justify-content-around">
+                        <a class="btn btn-success mx-1" href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">Modifier</a>
+                        <button type="button" class="btn btn-danger supprimeremprunt" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ emprunt.id }}">Supprimer</button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">pas de donnée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation d-flex justify-content-center">
+            {{ knp_pagination_render(emprunts) }}
+        </div>
+    </div>
+
+    {{ include('_modal_delete.html.twig') }}
+    <script src="{{ asset('js/supprimermodal.js') }}"></script>
+{% endblock %}

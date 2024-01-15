@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Emprunt{% endblock %}
+
+{% block body %}
+   <div class="container">
+        <h1>Edit Emprunt</h1>
+
+        {{ include('emprunt/_form.html.twig', {'button_label': 'Update'}) }}
+   </div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{{ form_start(form) }}
+    {# {{ form_widget(form) }} #}
+
+        <fieldset class="border px-4">
+            <legend class="float-none w-auto p-2" style="left: 100px;">Information de l'emprunt</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_label(form.etudiant) }}
+                    {{ form_widget(form.etudiant) }}
+                    {{ form_errors(form.etudiant) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_label(form.livre) }}
+                    {{ form_widget(form.livre) }}
+                    {{ form_errors(form.livre) }}
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_label(form.dateretourprevue) }}
+                    {{ form_widget(form.dateretourprevue) }}
+                    {{ form_errors(form.dateretourprevue) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_label(form.dateretoureffective) }}
+                    {{ form_widget(form.dateretoureffective) }}
+                    {{ form_errors(form.dateretoureffective) }}
+                </div>
+            </div> 
+    
+            <div class="row m-2"> <!-- Vous pouvez personnaliser la classe CSS selon vos besoins -->
+                <button type="reset" class="col-2 btn btn-secondary">Effacer</button>
+                <button class="offset-4 col-2 btn btn-primary">{{ button_label|default('Enregister') }}</button>
+            </div>
+        </fieldset>
+
+{{ form_end(form) }}

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emprunt search{% endblock %}
+
+{% block body %}
+   <div class="container mt-5">
+        <fieldset class="border border-black p-2">
+            <legend class="float-none w-auto p-2" style="left: 100px;">Rechercher les emprunts par date</legend>
+                
+            <form action="{{ path('app_emprunt_date') }}" method="post">
+                <div class="container">
+                    <div class="form group row">
+                        <div class="col-sm-2 col-form-label">
+                            <label for="name" class="form-label">Search</label>
+                        </div>
+                        <div class="col-sm-5">
+                            <input type="date" class="form-control" name="date" id="">
+                        </div
+                    </div>
+                    <div class="row m-2">
+                        <label class="col-1">Envoyer</label>
+                        <button type="submit" class="offset-1 col-2 btn btn-primary">{{ button_label|default('OK') }}</button>
+                    </div>
+                </div>
+            </form>
+
+        </fieldset>
+        <br>
+        <h1>Liste des emprunts par date</h1>
+     
+        <table class="table my-5">
+            <thead>
+                <tr>
+                    <th>Nom du livre</th>
+                    <th>Nom et prenom de l'etudiant</th>
+                    {# <th>Dateemprunt</th>
+                    <th>Dateretourprevue</th>
+                    <th>Dateretoureffective</th> #}
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for emprunt in emprunts %}
+                <tr>
+                    <td>{{ emprunt.livre.titre }}</td>
+                    <td>{{ emprunt.etudiant.nom }} {{ emprunt.etudiant.prenom }}</td>
+                    {# <td>{{ emprunt.dateemprunt ? emprunt.dateemprunt|date('Y-m-d') : '' }}</td>
+                    <td>{{ emprunt.dateretourprevue ? emprunt.dateretourprevue|date('Y-m-d') : '' }}</td>
+                    <td>{{ emprunt.dateretoureffective ? emprunt.dateretoureffective|date('Y-m-d') : '' }}</td> #}
+                    <td>
+                        <a class="btn btn-success" href="{{ path('app_emprunt_edit', {'id': emprunt.id}) }}">Modifier</a>
+                        <button type="button" class="btn btn-danger supprimeremprunt" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{ emprunt.id }}">Supprimer</button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">pas de données trouvée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {{ include('_modal_delete.html.twig') }}
+    <script src="{{ asset('js/supprimermodal.js') }}"></script>
+
+{% endblock %}
